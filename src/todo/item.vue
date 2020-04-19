@@ -1,11 +1,9 @@
 <template>
     <div  :class="['todo-item',todo.completed ? 'completed': '']">
-        <input
-            type="checkbox"
-            class="toggle"
-            v-model="todo.completed"
-        >
-        <label>{{todo.content}}</label>
+        <span>#{{todo.id}}</span>
+        <label
+            @click="finish"
+        >{{todo.content}}</label>
         <button
             class="destory"
             @click="delNow"
@@ -21,12 +19,15 @@ export default {
             required: true,
         }
     },
-    created() {
-        console.log(this.todo)
-    },
+    // created() {
+        // console.log(this.todo)
+    // },
     methods: {
         delNow() {
             this.$emit('del', this.todo.id)
+        },
+        finish() {
+            this.$emit('finished', this.todo.id, this.todo.completed)
         }
     }
 }
@@ -36,7 +37,12 @@ export default {
         position: relative;
         background-color: #fff;
         font-size: 24px;
+        display: flex;
         border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    span{
+        line-height: 58px;
+        padding: 0 20px;
     }
     label{
         white-space: pre-line;
@@ -46,6 +52,7 @@ export default {
         display: block;
         line-height: 1.2;
         transition: color 0.4s;
+        cursor: pointer;
     }
     .completed {
         color: #d9d9d9;

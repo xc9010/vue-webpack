@@ -11,6 +11,7 @@
             v-for="todo in todos"
             :key="todo.id"
             @del="delTodo"
+            @finished="finish"
         />
     </section>
 </template>
@@ -37,8 +38,14 @@ export default {
             })
             e.target.value = ''
         },
+        finish(id, completed) {
+            this.todos = [
+                ...this.todos.splice(0, this.todos.findIndex(i => i.id === id )),
+                Object.assign({}, this.todos[this.todos.findIndex(i => i.id === id )], { completed: !completed }),
+                ...this.todos.splice(this.todos.findIndex(i => i.id === id ) + 1)
+            ]
+        },
         delTodo(id) {
-            console.log(id)
             this.todos.splice(this.todos.findIndex(i => i.id === id ) ,1)
         }
     }

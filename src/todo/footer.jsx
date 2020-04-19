@@ -6,7 +6,7 @@ export default {
     },
     render() {
         return (
-            <div id="footer">
+            <div id="footer" style={{ textAlign: 'center' }}>
                 <span>Write by {this.author}</span>
             </div>
         )
