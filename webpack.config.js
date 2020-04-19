@@ -1,14 +1,23 @@
 const path = require('path');
 const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const HTMLPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const isDev = process.env.NODE_ENV === 'development';
 console.log(isDev)
 
 module.exports = {
     target: 'web',
-    entry: path.join(__dirname, 'src/index.js'),
+    entry: {
+        index: path.join(__dirname, 'src/index.js'),
+        //你需要引入的第三方库文件
+        vendor: [
+            'vue',
+            // 'vuex',
+            // 'vue-router',
+            'element-ui'
+        ],
+    },
     output: {
         filename: 'bundle.js',
         path: path.join(__dirname, 'dist')
@@ -62,6 +71,10 @@ module.exports = {
           }
         }),
         new VueLoaderPlugin(),
-        new HTMLPlugin()
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            template: 'index.html',
+            inject: true
+          }),
       ]
 }

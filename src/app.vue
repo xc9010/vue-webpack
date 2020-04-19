@@ -1,9 +1,16 @@
 <template>
     <div id="app">
         <div id="cover">
-            <Header></Header>
-            <Todo></Todo>
-            <Footer></Footer>
+            <el-row>
+                <el-col :span="3">
+                    <Menus></Menus>                
+                </el-col>
+                <el-col :span="21">
+                    <Header></Header>
+                    <Todo></Todo>
+                    <Footer></Footer>
+                </el-col>
+            </el-row>
         </div>
     </div>
 </template>
@@ -12,11 +19,13 @@
 import Header from './todo/header.vue';
 import Todo from './todo/todo.vue';
 import Footer from './todo/footer.jsx';
+import Menus from './menu/menus.vue';
 export default {
     components: {
         Header,
         Footer,
         Todo,
+        Menus,
     }
 }
 </script>
