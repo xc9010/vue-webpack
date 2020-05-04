@@ -6,6 +6,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const isDev = process.env.NODE_ENV === 'development';
 console.log(isDev)
 
+function resolve (dir) {
+    return path.join(__dirname, '.', dir)
+}
+
 module.exports = {
     target: 'web',
     entry: {
@@ -22,11 +26,32 @@ module.exports = {
         filename: 'bundle.js',
         path: path.join(__dirname, 'dist')
     },
+    resolve: {
+        extensions: ['.js', '.vue', '.json'],
+        alias: {
+            'vue$': 'vue/dist/vue.esm.js',
+            '@': resolve('src')
+        }
+      },
     module: {
         rules: [
             {
                 test: /\.vue$/,
-                loader: 'vue-loader'
+                loader: 'vue-loader',
+                options: {
+                    loaders: {
+                        js: 'babel-loader',
+                        scss: [
+                            'style-loader',
+                            'css-loader',
+                            'sass-loader'
+                        ]
+                    }
+                }
+            },
+            {
+                test: /\.less$/,
+                loader: "style-loader!css-loader!less-loader",
             },
             {
                 test: /\.jsx$/,
